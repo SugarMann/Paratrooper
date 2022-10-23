@@ -24,7 +24,8 @@
 **********************************************************************************************/
 
 #include "raylib.h"
-#include "screens.h"
+#include "stdint.h"
+#include <Screens\ScreenOptions.h>
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)

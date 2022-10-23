@@ -24,7 +24,9 @@
 **********************************************************************************************/
 
 #include "raylib.h"
-#include "screens.h"
+#include "stdint.h"
+#include <Screens/ScreenEnding.h>
+#include <GlobalGameDefines.h>
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
@@ -61,8 +63,9 @@ void UpdateEndingScreen(void)
 void DrawEndingScreen(void)
 {
     // TODO: Draw ENDING screen here!
+    Vector2 endingVector = { 20,10 };
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), BLUE);
-    DrawTextEx(font, "ENDING SCREEN", (Vector2){ 20, 10 }, font.baseSize*3.0f, 4, DARKBLUE);
+    DrawTextEx(font, "ENDING SCREEN", endingVector, font.baseSize*3.0f, 4, DARKBLUE);
     DrawText("PRESS ENTER or TAP to RETURN to TITLE SCREEN", 120, 220, 20, DARKBLUE);
 }
 

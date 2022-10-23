@@ -13,6 +13,11 @@
 ********************************************************************************************/
 
 #include "raylib.h"
+#include "Screens/ScreenEnding.h"
+#include "Screens/ScreenGameplay.h"
+#include "Screens/ScreenLogo.h"
+#include "ScreenOptions.h"
+#include "Screens/ScreenTitle.h"
 #include "GlobalGameDefines.h"    // NOTE: Declares global (extern) variables
 
 #if defined(PLATFORM_WEB)
@@ -38,15 +43,15 @@ static const int screenHeight = 450;
 static float transAlpha = 0.0f;
 static bool onTransition = false;
 static bool transFadeOut = false;
-static int transFromScreen = -1;
-static int transToScreen = -1;
+static GameScreen transFromScreen;
+static GameScreen transToScreen;
 
 //----------------------------------------------------------------------------------
 // Local Functions Declaration
 //----------------------------------------------------------------------------------
-static void ChangeToScreen(int screen);     // Change to screen, no transition effect
+static void ChangeToScreen(GameScreen screen);     // Change to screen, no transition effect
 
-static void TransitionToScreen(int screen); // Request transition to next screen
+static void TransitionToScreen(GameScreen screen); // Request transition to next screen
 static void UpdateTransition(void);         // Update transition effect
 static void DrawTransition(void);           // Draw transition effect (full-screen rectangle)
 
@@ -59,7 +64,7 @@ int main(void)
 {
     // Initialization
     //---------------------------------------------------------
-    InitWindow(screenWidth, screenHeight, "raylib game template");
+    InitWindow(screenWidth, screenHeight, "Paratrooper");
 
     InitAudioDevice();      // Initialize audio device
 
@@ -117,7 +122,7 @@ int main(void)
 // Module specific Functions Definition
 //----------------------------------------------------------------------------------
 // Change to next screen, no transition
-static void ChangeToScreen(int screen)
+static void ChangeToScreen(GameScreen screen)
 {
     // Unload current screen
     switch (currentScreen)
@@ -143,7 +148,7 @@ static void ChangeToScreen(int screen)
 }
 
 // Request transition to next screen
-static void TransitionToScreen(int screen)
+static void TransitionToScreen(GameScreen screen)
 {
     onTransition = true;
     transFadeOut = false;
@@ -201,8 +206,8 @@ static void UpdateTransition(void)
             transAlpha = 0.0f;
             transFadeOut = false;
             onTransition = false;
-            transFromScreen = -1;
-            transToScreen = -1;
+            //transFromScreen = -1;
+            //transToScreen = -1;
         }
     }
 }

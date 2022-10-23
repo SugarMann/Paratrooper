@@ -24,7 +24,8 @@
 **********************************************************************************************/
 
 #include "raylib.h"
-#include "screens.h"
+#include "stdint.h"
+#include <Screens/ScreenLogo.h>
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
@@ -43,7 +44,7 @@ static int leftSideRecHeight = 0;
 static int bottomSideRecWidth = 0;
 static int rightSideRecHeight = 0;
 
-static int state = 0;              // Logo animation states
+static uint16_t state = 0;              // Logo animation states
 static float alpha = 1.0f;         // Useful for fading
 
 //----------------------------------------------------------------------------------
