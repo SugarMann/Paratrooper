@@ -28,7 +28,7 @@
 // Shared Variables Definition (global)
 // NOTE: Those variables are shared between modules through screens.h
 //----------------------------------------------------------------------------------
-GameScreen currentScreen = LOGO;
+GameScreen currentScreen;
 Font font = { 0 };
 Music music = { 0 };
 Sound fxCoin = { 0 };

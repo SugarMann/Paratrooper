@@ -23,10 +23,12 @@
 *
 **********************************************************************************************/
 
+#include <stdint.h>
+#include <string>
+
 #include "raylib.h"
-#include "stdint.h"
-#include <Screens/ScreenTitle.h>
-#include <GlobalGameDefines.h>
+#include "Screens/ScreenTitle.h"
+#include "GlobalGameDefines.h"
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
@@ -63,11 +65,23 @@ void UpdateTitleScreen(void)
 // Title Screen Draw logic
 void DrawTitleScreen(void)
 {
-    // TODO: Draw TITLE screen here!
-    Vector2 titleVector = { 20,10 };
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), GREEN);
-    DrawTextEx(font, "TITLE SCREEN", titleVector, font.baseSize*3.0f, 4, DARKGREEN);
-    DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", 120, 220, 20, DARKGREEN);
+    // Draw background
+    ClearBackground(BLACK);
+    // Load and draw title image
+    Texture2D titleTexture = LoadTexture("resources/Menus/Title.png");
+    DrawTexture(titleTexture, GetScreenWidth() / 2 - titleTexture.width / 2, GetScreenHeight() / 4 - titleTexture.height / 2, WHITE);
+
+    // Add text about menu information
+    std::string info = " Press Enter for Playing\nPress 'O' for Instructions";
+    uint16_t infoPosX = GetScreenWidth() / 3;
+    uint16_t infoPosY = static_cast<uint16_t>(GetScreenHeight() / 1.5f);
+    DrawText(info.c_str(), infoPosX, infoPosY, 22U, WHITE);
+
+    // Add author's name texture 
+    std::string author = "    by\nCarlos C.";
+    uint16_t authorPosX = static_cast<uint16_t>(GetScreenWidth() / 2.25f);
+    uint16_t authorPosY = static_cast<uint16_t>(GetScreenHeight() / 2.25f);
+    DrawText(author.c_str(), authorPosX, authorPosY, 18U, WHITE);
 }
 
 // Title Screen Unload logic
