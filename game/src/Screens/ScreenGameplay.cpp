@@ -23,10 +23,11 @@
 *
 **********************************************************************************************/
 
+#include <stdint.h>
+
 #include "raylib.h"
-#include "stdint.h"
-#include <Screens\ScreenGameplay.h>
-#include <GlobalGameDefines.h>
+#include "Screens\ScreenGameplay.h"
+#include "GlobalGameDefines.h"
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)

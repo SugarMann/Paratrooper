@@ -56,8 +56,12 @@ void UpdateTitleScreen(void)
     // Press enter or tap to change to GAMEPLAY screen
     if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
     {
-        //finishScreen = 1;   // OPTIONS
         finishScreen = 2;   // GAMEPLAY
+        PlaySound(fxCoin);
+    }
+    else if (IsKeyPressed(KEY_O))
+    {
+        finishScreen = 1; // OPTIONS
         PlaySound(fxCoin);
     }
 }
@@ -73,13 +77,13 @@ void DrawTitleScreen(void)
 
     // Add text about menu information
     std::string info = " Press Enter for Playing\nPress 'O' for Instructions";
-    uint16_t infoPosX = GetScreenWidth() / 3;
+    uint16_t infoPosX = static_cast<uint16_t>(GetScreenWidth() / 3.5f);
     uint16_t infoPosY = static_cast<uint16_t>(GetScreenHeight() / 1.5f);
     DrawText(info.c_str(), infoPosX, infoPosY, 22U, WHITE);
 
     // Add author's name texture 
-    std::string author = "    by\nCarlos C.";
-    uint16_t authorPosX = static_cast<uint16_t>(GetScreenWidth() / 2.25f);
+    std::string author = "     by\n Carlos C.";
+    uint16_t authorPosX = static_cast<uint16_t>(GetScreenWidth() / 2.5f);
     uint16_t authorPosY = static_cast<uint16_t>(GetScreenHeight() / 2.25f);
     DrawText(author.c_str(), authorPosX, authorPosY, 18U, WHITE);
 }

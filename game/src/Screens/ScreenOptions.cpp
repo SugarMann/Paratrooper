@@ -23,9 +23,12 @@
 *
 **********************************************************************************************/
 
+#include <stdint.h>
+#include <string>
+
 #include "raylib.h"
-#include "stdint.h"
-#include <Screens\ScreenOptions.h>
+#include "Screens\ScreenOptions.h"
+#include "GlobalGameDefines.h"
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
@@ -48,13 +51,26 @@ void InitOptionsScreen(void)
 // Options Screen Update logic
 void UpdateOptionsScreen(void)
 {
-    // TODO: Update OPTIONS screen variables here!
+    if (IsKeyPressed(KEY_O))
+    {
+        finishScreen = 1;   // TITLE
+        PlaySound(fxCoin);
+    }
 }
 
 // Options Screen Draw logic
 void DrawOptionsScreen(void)
 {
-    // TODO: Draw OPTIONS screen here!
+    // Draw background
+    ClearBackground(BLACK);
+    // Add text about options information
+    std::string gameInfo = "   Do not allow enemy paratroopers to land\n   on either side of your gun base. If seven\nparatroopers land on your base you will loose";
+    std::string controls = "\n\n\n                Press space to shot.\nPress 'A' to move the turret counterclockwise.\n    Press 'D' to move the turret clockwise";
+    std::string escapeInfo = "\n\n             Press 'O' to return to Title";
+    std::string info = gameInfo+controls+escapeInfo;
+    uint16_t infoPosX = GetScreenWidth() / 6;
+    uint16_t infoPosY = GetScreenHeight() / 8;
+    DrawText(info.c_str(), infoPosX, infoPosY, 22U, WHITE);
 }
 
 // Options Screen Unload logic

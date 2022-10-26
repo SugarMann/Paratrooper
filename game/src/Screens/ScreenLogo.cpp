@@ -23,9 +23,10 @@
 *
 **********************************************************************************************/
 
+#include <stdint.h>
+
 #include "raylib.h"
-#include "stdint.h"
-#include <Screens/ScreenLogo.h>
+#include "Screens/ScreenLogo.h"
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
