@@ -24,6 +24,9 @@
 **********************************************************************************************/
 
 #include <stdint.h>
+#include <string>
+#include <chrono>
+#include <ctime>
 
 #include "raylib.h"
 #include "Screens\ScreenGameplay.h"
@@ -32,8 +35,11 @@
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
 //----------------------------------------------------------------------------------
-static int framesCounter = 0;
-static int finishScreen = 0;
+static int framesCounter, finishScreen;
+std::chrono::system_clock::time_point start, end;
+std::chrono::duration<double> elapsedTime;
+uint32_t score;
+uint32_t landed;
 
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Definition
@@ -45,12 +51,14 @@ void InitGameplayScreen(void)
     // TODO: Initialize GAMEPLAY screen variables here!
     framesCounter = 0;
     finishScreen = 0;
+    score = 0U;
+    landed = 0U;
+    start = std::chrono::system_clock::now();
 }
 
 // Gameplay Screen Update logic
 void UpdateGameplayScreen(void)
 {
-    // TODO: Update GAMEPLAY screen variables here!
 
     // Press enter or tap to change to ENDING screen
     if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
@@ -63,11 +71,31 @@ void UpdateGameplayScreen(void)
 // Gameplay Screen Draw logic
 void DrawGameplayScreen(void)
 {
-    // TODO: Draw GAMEPLAY screen here!
-    Vector2 gameplayVector = { 20,10 };
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), PURPLE);
-    DrawTextEx(font, "GAMEPLAY SCREEN", gameplayVector, font.baseSize*3.0f, 4, MAROON);
-    DrawText("PRESS ENTER or TAP to JUMP to ENDING SCREEN", 130, 220, 20, MAROON);
+    // Draw background
+    ClearBackground(BLACK);
+
+    // Add text about score points
+    std::string stringInfo = "SCORE: " + std::to_string(score);
+    uint16_t infoPosX = static_cast<uint16_t>(GetScreenWidth() / 12);
+    uint16_t infoPosY = 5U;
+    DrawText(stringInfo.c_str(), infoPosX, infoPosY, 22U, PURPLE);
+
+    // Update the elapsed time since the gameplay screen was initialized
+    end = std::chrono::system_clock::now();
+    elapsedTime = end - start;
+
+    // Add text about time
+    stringInfo = "TIME: " + std::to_string(elapsedTime.count());
+    infoPosX = static_cast<uint16_t>(GetScreenWidth() / 2.75f);
+    infoPosY = 5U;
+    DrawText(stringInfo.c_str(), infoPosX, infoPosY, 22U, WHITE);
+
+    // Add text about landed soldiers
+    stringInfo = "LANDED: " + std::to_string(landed);
+    infoPosX = static_cast<uint16_t>(GetScreenWidth() / 1.35f);
+    infoPosY = 5U;
+    DrawText(stringInfo.c_str(), infoPosX, infoPosY, 22U, PURPLE);
+
 }
 
 // Gameplay Screen Unload logic
