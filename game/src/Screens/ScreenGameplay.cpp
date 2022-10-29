@@ -29,8 +29,12 @@
 #include <ctime>
 
 #include "raylib.h"
-#include "Screens\ScreenGameplay.h"
+#include "Screens/ScreenGameplay.h"
 #include "GlobalGameDefines.h"
+#include "Game/Player.h"
+#include "Game/EnemyManager.h"
+#include "Game/Helicotper.h"
+#include "Game/Soldier.h"
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
@@ -40,6 +44,11 @@ std::chrono::system_clock::time_point start, end;
 std::chrono::duration<double> elapsedTime;
 uint32_t score;
 uint32_t landed;
+
+// Gameplay objects
+Player player;
+Helicopter helicopters[2];
+Soldier soldier;
 
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Definition

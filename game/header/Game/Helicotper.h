@@ -14,17 +14,18 @@ class Helicopter {
 	// Variables
 	Vector2 m_position, m_speed;
 	Texture2D m_sprite;
+	bool m_alive;
 
 public:
 
 	// Contructors
 	Helicopter();
-	Helicopter(Vector2 position, Vector2 speed);
+	Helicopter(const Vector2& position,const Vector2& speed, Texture2D& sprite);
 
 	// Getters and Setters
-	void setPosition(Vector2 position);
-	void setSpeed(Vector2 speed);
-	void setTexture(Texture2D sprite);
+	void setPosition(const Vector2& position);
+	void setSpeed(const Vector2& speed);
+	void setTexture(Texture2D& sprite);
 	Vector2 getPosition() { return m_position; }
 	Vector2 getSpeed() { return m_speed; }
 	Texture2D getTexture() { return m_sprite; }
