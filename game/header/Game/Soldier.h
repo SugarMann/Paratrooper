@@ -3,6 +3,8 @@
 #define SOLDIER_H
 
 // Includes
+#include <stdint.h>
+
 #include "raylib.h"
 
 #ifdef __cplusplus
@@ -13,22 +15,30 @@ extern "C" {            // Prevents name mangling of functions
 class Soldier {
 
 	// Variables
-	Vector2 m_position, m_speed;
+	Vector2 m_position;
 	Texture2D m_sprite;
-	bool m_alive;
+	float m_speed;
+	float m_scale;
 
 public:
 
+	//Public variables
+	uint8_t m_despawn;
+	bool m_landed;
+	bool m_alive;
+
 	// Contructors
 	Soldier();
-	Soldier(const Vector2& position, const Vector2& speed, Texture2D& sprite);
+	Soldier(const Vector2& position, const float& speed, Texture2D& sprite, float& scale);
 
 	// Getters and Setters
 	void setPosition(const Vector2& position);
-	void setSpeed(const Vector2& speed);
+	void setSpeed(const float& speed);
+	void setScale(const float& scale);
 	void setTexture(Texture2D& sprite);
 	Vector2 getPosition() { return m_position; }
-	Vector2 getSpeed() { return m_speed; }
+	float getSpeed() { return m_speed; }
+	float getScale() { return m_scale; }
 	Texture2D getTexture() { return m_sprite; }
 
 };
