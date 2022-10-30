@@ -55,7 +55,7 @@ void InitEndingScreen(void)
     timeString = "\n     Time: " + std::to_string(gameplayTime.count());
     info = gameOver + scoreString + timeString + options;
     infoPosX = GetScreenWidth() / 3;
-    infoPosY = GetScreenHeight() / 3;
+    infoPosY = GetScreenHeight() / 4;
 }
 
 // Ending Screen Update logic

@@ -200,7 +200,7 @@ void UpdateGameplayScreen(void)
     removeSoldiers(soldiers, projectiles, score); // Killed by player
 
     // Press enter or tap to change to ENDING screen
-    if (IsKeyPressed(KEY_ENTER) || landed == 7U)
+    if (IsKeyPressed(KEY_Q) || landed == 7U)
     {
         finishScreen = 1U;
         PlaySound(fxGameOver);

@@ -55,13 +55,13 @@ void InitOptionsScreen(void)
     framesCounter = 0;
     finishScreen = 0;
     gameInfo = "   Do not allow enemy paratroopers to land\n   on either side of your gun base. If seven\nparatroopers land on your base you will loose";
-    controls = "\n\n\n                Press space to shot.\nPress 'A' to move the turret counterclockwise.\n    Press 'D' to move the turret clockwise";
+    controls = "\n\n                Press space to shot.\nPress 'A' to move the turret counterclockwise.\n    Press 'D' to move the turret clockwise";
     escapeInfo = "\n\n             Press 'O' to return to Title\nPress 'Left Arrow' and 'Right Arrow' to modify\n                     the difficulty";
     stringInfo = gameInfo + controls + escapeInfo;
     infoPosX = GetScreenWidth() / 6;
     infoPosY = GetScreenHeight() / 8;
     difPosX = static_cast<uint16_t>(GetScreenWidth() / 2.75f);
-    difPosY = 10U;
+    difPosY = 15U;
 }
 
 // Options Screen Update logic
