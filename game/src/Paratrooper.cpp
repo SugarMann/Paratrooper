@@ -36,7 +36,7 @@ Sound fxShoot = { 0 };
 Sound fxGameOver = { 0 };
 Sound fxExplosion = { 0 };
 uint32_t score = 0U;
-uint16_t difficulty = 4U;
+uint16_t difficulty = 7U;
 std::chrono::duration<double> gameplayTime;
 
 //----------------------------------------------------------------------------------

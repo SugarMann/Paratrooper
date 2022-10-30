@@ -139,6 +139,11 @@ void createSoldiers(std::vector<Helicopter>& helicopters, std::vector<Soldier>& 
 			{
 				continue;
 			}
+			else if (helicopter.getPosition().x <= 0U ||
+					helicopter.getPosition().x >= GetScreenWidth())
+			{
+				continue;
+			}
 			else // If it's not, soldiers can deploy
 			{
 				Soldier newSoldier(helicopter.getPosition(), speed, sprite, scale);
