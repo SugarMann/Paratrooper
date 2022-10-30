@@ -30,8 +30,14 @@
 //----------------------------------------------------------------------------------
 GameScreen currentScreen;
 Font font = { 0 };
-Music music = { 0 };
+Music introMusic = { 0 };
 Sound fxCoin = { 0 };
+Sound fxShoot = { 0 };
+Sound fxGameOver = { 0 };
+Sound fxExplosion = { 0 };
+uint32_t score = 0U;
+uint16_t difficulty = 4U;
+std::chrono::duration<double> gameplayTime;
 
 //----------------------------------------------------------------------------------
 // Local Variables Definition (local to this module)
@@ -70,11 +76,17 @@ int main(void)
 
     // Load global data (assets that must be available in all screens, i.e. font)
     font = LoadFont("resources/mecha.png");
-    music = LoadMusicStream("resources/ambient.ogg");
+    introMusic = LoadMusicStream("resources/Paratrooper_intro.ogg");
     fxCoin = LoadSound("resources/coin.wav");
+    fxShoot = LoadSound("resources/boop.wav");
+    fxGameOver = LoadSound("resources/game_over.wav");
+    fxExplosion = LoadSound("resources/damage.wav");
 
-    SetMusicVolume(music, 1.0f);
-    PlayMusicStream(music);
+    SetMusicVolume(introMusic, 0.7f);
+    SetSoundVolume(fxCoin, 0.3f);
+    SetSoundVolume(fxShoot, 0.3f);
+    SetSoundVolume(fxGameOver, 0.3f);
+    SetSoundVolume(fxExplosion, 0.3f);
 
     // Setup and init first screen
     currentScreen = LOGO;
@@ -108,8 +120,11 @@ int main(void)
 
     // Unload global data loaded
     UnloadFont(font);
-    UnloadMusicStream(music);
+    UnloadMusicStream(introMusic);
     UnloadSound(fxCoin);
+    UnloadSound(fxShoot);
+    UnloadSound(fxGameOver);
+    UnloadSound(fxExplosion);
 
     CloseAudioDevice();     // Close audio context
 
@@ -227,7 +242,7 @@ static void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-    UpdateMusicStream(music);       // NOTE: Music keeps playing between screens
+    UpdateMusicStream(introMusic);       // NOTE: Music keeps playing between screens
 
     if (!onTransition)
     {

@@ -23,14 +23,29 @@
 *
 **********************************************************************************************/
 
+#include <stdint.h>
+#include <string>
+#include <chrono>
+
 #include "raylib.h"
-#include "screens.h"
+#include "Screens/ScreenTitle.h"
+#include "GlobalGameDefines.h"
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
 //----------------------------------------------------------------------------------
-static int framesCounter = 0;
-static int finishScreen = 0;
+static int framesCounter;
+static int finishScreen;
+std::string info, author;
+static uint16_t infoPosX, infoPosY, authorPosX, authorPosY;
+
+// Time variables
+// Time variables
+static std::chrono::system_clock::time_point start, end;
+static std::chrono::duration<double> elapsedTime;
+
+// Textures
+Texture2D titleTexture;
 
 //----------------------------------------------------------------------------------
 // Title Screen Functions Definition
@@ -39,21 +54,45 @@ static int finishScreen = 0;
 // Title Screen Initialization logic
 void InitTitleScreen(void)
 {
-    // TODO: Initialize TITLE screen variables here!
     framesCounter = 0;
     finishScreen = 0;
+    // Save title texture
+    titleTexture = LoadTexture("resources/Menus/Title.png");
+    // Save information about menu
+    infoPosX = static_cast<uint16_t>(GetScreenWidth() / 3.5f);
+    infoPosY = static_cast<uint16_t>(GetScreenHeight() / 1.5f);
+    info = " Press Enter for Playing\nPress 'O' for Instructions";
+    // Save author's info.
+    authorPosX = static_cast<uint16_t>(GetScreenWidth() / 2.5f);
+    authorPosY = static_cast<uint16_t>(GetScreenHeight() / 2.25f);
+    author = "     by\n Carlos C.";
+
+    // Start counter for title screen
+    start = std::chrono::system_clock::now();
+    PlayMusicStream(introMusic);
 }
 
 // Title Screen Update logic
 void UpdateTitleScreen(void)
 {
-    // TODO: Update TITLE screen variables here!
+    // Update the elapsed time since the gameplay screen was initialized
+    end = std::chrono::system_clock::now();
+    elapsedTime = end - start;
+
+    // Only play intro music one time
+    if(elapsedTime.count() >= 6.75)
+        StopMusicStream(introMusic);
+
 
     // Press enter or tap to change to GAMEPLAY screen
     if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
     {
-        //finishScreen = 1;   // OPTIONS
         finishScreen = 2;   // GAMEPLAY
+        PlaySound(fxCoin);
+    }
+    else if (IsKeyPressed(KEY_O))
+    {
+        finishScreen = 1; // OPTIONS
         PlaySound(fxCoin);
     }
 }
@@ -61,16 +100,24 @@ void UpdateTitleScreen(void)
 // Title Screen Draw logic
 void DrawTitleScreen(void)
 {
-    // TODO: Draw TITLE screen here!
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), GREEN);
-    DrawTextEx(font, "TITLE SCREEN", (Vector2){ 20, 10 }, font.baseSize*3.0f, 4, DARKGREEN);
-    DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", 120, 220, 20, DARKGREEN);
+    // Draw background
+    ClearBackground(BLACK);
+
+    // Load and draw title image
+    DrawTexture(titleTexture, GetScreenWidth() / 2 - titleTexture.width / 2, GetScreenHeight() / 4 - titleTexture.height / 2, WHITE);
+
+    // Add text about menu information 
+    DrawText(info.c_str(), infoPosX, infoPosY, 22U, WHITE);
+
+    // Add author's name texture  
+    DrawText(author.c_str(), authorPosX, authorPosY, 18U, WHITE);
 }
 
 // Title Screen Unload logic
 void UnloadTitleScreen(void)
 {
-    // TODO: Unload TITLE screen variables here!
+    UnloadTexture(titleTexture);
+    StopMusicStream(introMusic);
 }
 
 // Title Screen should finish?

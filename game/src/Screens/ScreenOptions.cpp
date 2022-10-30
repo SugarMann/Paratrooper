@@ -36,6 +36,14 @@
 static int framesCounter = 0;
 static int finishScreen = 0;
 
+static std::string gameInfo;
+static std::string controls;
+static std::string escapeInfo;
+static uint16_t infoPosX, difPosX;
+static uint16_t infoPosY, difPosY;
+static std::string stringInfo;
+static std::string stringDifficulty;
+
 //----------------------------------------------------------------------------------
 // Options Screen Functions Definition
 //----------------------------------------------------------------------------------
@@ -46,12 +54,26 @@ void InitOptionsScreen(void)
     // TODO: Initialize OPTIONS screen variables here!
     framesCounter = 0;
     finishScreen = 0;
+    gameInfo = "   Do not allow enemy paratroopers to land\n   on either side of your gun base. If seven\nparatroopers land on your base you will loose";
+    controls = "\n\n\n                Press space to shot.\nPress 'A' to move the turret counterclockwise.\n    Press 'D' to move the turret clockwise";
+    escapeInfo = "\n\n             Press 'O' to return to Title\nPress 'Left Arrow' and 'Right Arrow' to modify\n                     the difficulty";
+    stringInfo = gameInfo + controls + escapeInfo;
+    infoPosX = GetScreenWidth() / 6;
+    infoPosY = GetScreenHeight() / 8;
+    difPosX = static_cast<uint16_t>(GetScreenWidth() / 2.75f);
+    difPosY = 10U;
 }
 
 // Options Screen Update logic
 void UpdateOptionsScreen(void)
 {
-    if (IsKeyPressed(KEY_O))
+
+    if (IsKeyPressed(KEY_LEFT) && difficulty > 4U)
+        difficulty -= 3U;
+    if (IsKeyPressed(KEY_RIGHT) && difficulty < 10U)
+        difficulty += 3U;
+
+    if (IsKeyPressed(KEY_O) || IsKeyPressed(KEY_ENTER))
     {
         finishScreen = 1;   // TITLE
         PlaySound(fxCoin);
@@ -63,20 +85,33 @@ void DrawOptionsScreen(void)
 {
     // Draw background
     ClearBackground(BLACK);
+
     // Add text about options information
-    std::string gameInfo = "   Do not allow enemy paratroopers to land\n   on either side of your gun base. If seven\nparatroopers land on your base you will loose";
-    std::string controls = "\n\n\n                Press space to shot.\nPress 'A' to move the turret counterclockwise.\n    Press 'D' to move the turret clockwise";
-    std::string escapeInfo = "\n\n             Press 'O' to return to Title";
-    std::string info = gameInfo+controls+escapeInfo;
-    uint16_t infoPosX = GetScreenWidth() / 6;
-    uint16_t infoPosY = GetScreenHeight() / 8;
-    DrawText(info.c_str(), infoPosX, infoPosY, 22U, WHITE);
+    DrawText(stringInfo.c_str(), infoPosX, infoPosY, 22U, WHITE);
+
+    // Add text to choose difficulty
+    switch (difficulty)
+    {
+    case 4: 
+        stringDifficulty = "DIFFICULTY: EASY";
+        DrawText(stringDifficulty.c_str(), difPosX, difPosY, 22U, WHITE); 
+        break;
+    case 7: 
+        stringDifficulty = "DIFFICULTY: NORMAL";
+        DrawText(stringDifficulty.c_str(), difPosX, difPosY, 22U, WHITE); 
+        break;
+    case 10: 
+        stringDifficulty = "DIFFICULTY: EXPERT";
+        DrawText(stringDifficulty.c_str(), difPosX, difPosY, 22U, WHITE); 
+        break;
+    }
+
 }
 
 // Options Screen Unload logic
 void UnloadOptionsScreen(void)
 {
-    // TODO: Unload OPTIONS screen variables here!
+
 }
 
 // Options Screen should finish?
